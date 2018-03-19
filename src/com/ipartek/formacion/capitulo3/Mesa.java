@@ -35,15 +35,40 @@ public class Mesa {
 
 	public Mesa(int pNumPatas) {
 		super();
-		this.numPatas = pNumPatas;
+		this.setNumPatas(pNumPatas);
+		;
+	}
+
+	public int getDimension() {
+		return dimension;
+	}
+
+	public void setDimension(int dimension) {
+		this.dimension = dimension;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public int getMaterial() {
+		return material;
+	}
+
+	public void setMaterial(int material) {
+		this.material = material;
 	}
 
 	public Mesa(int pNumPatas, int pDimension, String pColor, int pMaterial) {
 		super();
 		this.setNumPatas(pNumPatas);
-		this.dimension = pDimension;
-		this.color = pColor;
-		this.material = pMaterial;
+		this.setDimension(pDimension);
+		this.setColor(pColor);
+		this.setMaterial(pMaterial);
 	}
 
 	// 5.2gettes y setters
@@ -63,16 +88,16 @@ public class Mesa {
 
 	public int calcularPrecio() {
 		// cálculo de las patas
-		int precioPatas = this.numPatas * PRECIO_PATA;
+		int precioPatas = this.getNumPatas() * PRECIO_PATA;
 		// cálculo de la dimensión
-		int precioDimension = this.dimension * PRECIO_M2;
+		int precioDimension = this.getDimension() * PRECIO_M2;
 		// cálculo del color
 		int precioColor = 0;
-		if (this.color.equals("custom")) {
+		if (this.getColor().equals("custom")) {
 			precioColor = PRECIO_COLOR_CUSTOM;
 		}
 		int precioMaterial = 0;
-		switch (material) {
+		switch (this.getMaterial()) {
 		case 1: {
 			precioMaterial = PRECIO_MATERIAL_MADERA;
 			break;

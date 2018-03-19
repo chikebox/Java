@@ -16,6 +16,11 @@ public class EjercicioMesas {
 		Mesa mAingeru = new Mesa(5, 7, "plateado", 2);
 		Mesa mJoseba = new Mesa(3, 5, "amarillo", 3);
 		Mesa mAnder = new Mesa(1, 2, "custom", 4);
+		System.out.println(mIzaskun.calcularPrecio());
+		System.out.println(mMikel.calcularPrecio());
+		System.out.println(mAingeru.calcularPrecio());
+		System.out.println(mJoseba.calcularPrecio());
+		System.out.println(mAnder.calcularPrecio());
 	}
 
 }
