@@ -13,10 +13,10 @@ public class Mesa {
 	final int PRECIO_MATERIAL_PLASTICO = 2;
 	final int PRECIO_COLOR_CUSTOM = 23;
 	final String PRECIO_COLOR_NAME_CUSTOMS = "custom";
-	final int MATERIAL_MADERA = 1;
-	final int MATERIAL_ACERO = 2;
-	final int MATERIAL_ALUMINIO = 3;
-	final int MATERIAL_PLASTICO = 4;
+	public static final int MATERIAL_MADERA = 1;
+	public static final int MATERIAL_ACERO = 2;
+	public static final int MATERIAL_ALUMINIO = 3;
+	public static final int MATERIAL_PLASTICO = 4;
 	// 4.Definición de atributos
 	private int numPatas;
 	private int dimension; // m2
@@ -26,6 +26,7 @@ public class Mesa {
 	// 5. Métodos
 	// 5.1 constructores
 	public Mesa() {
+		//siempre hay que llamar al padre
 		super();
 		this.numPatas = 4;
 		this.dimension = 1;
@@ -34,9 +35,31 @@ public class Mesa {
 	}
 
 	public Mesa(int pNumPatas) {
-		super();
+		//llama a la constructora por defecto
+		this();
 		this.setNumPatas(pNumPatas);
-		;
+	}
+
+	public Mesa(int pNumPatas, int pDimension, String pColor, int pMaterial) {
+		//LLama a la constructora que ya recibe las patas.
+		this(pNumPatas);
+		this.setDimension(pDimension);
+		this.setColor(pColor);
+		try {
+			this.setMaterial(pMaterial);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	// 5.2gettes y setters
+	public int getNumPatas() {
+		return this.numPatas;
+	}
+
+	public void setNumPatas(int pNumPatas) {
+		this.numPatas = (pNumPatas < 0) ? 0 : pNumPatas;
 	}
 
 	public int getDimension() {
@@ -59,25 +82,18 @@ public class Mesa {
 		return material;
 	}
 
-	public void setMaterial(int material) {
-		this.material = material;
-	}
+	public void setMaterial(int material) throws Exception {
 
-	public Mesa(int pNumPatas, int pDimension, String pColor, int pMaterial) {
-		super();
-		this.setNumPatas(pNumPatas);
-		this.setDimension(pDimension);
-		this.setColor(pColor);
-		this.setMaterial(pMaterial);
-	}
+		if (material > 0 && material <= 4) {
+			this.material = material;
+		} 
+		else {
+			this.material = 1;
 
-	// 5.2gettes y setters
-	public int getNumPatas() {
-		return this.numPatas;
-	}
+			throw new Exception("Por favor, el material debe ser entre 0 y 4, y tu has metido el valor " + material
+					+ ", se te ha asignado que sea de madera");
+		}
 
-	public void setNumPatas(int pNumPatas) {
-		this.numPatas = (pNumPatas < 0) ? 0 : pNumPatas;
 	}
 	// 5.3 otros
 
@@ -115,6 +131,6 @@ public class Mesa {
 			break;
 		}
 		}
-		return precioPatas + precioDimension + precioColor + precioMaterial;
+		return precioPatas + (precioDimension * precioMaterial) + precioColor ;
 	}
 }
