@@ -59,7 +59,7 @@ public class Mesa {
 	}
 
 	public void setNumPatas(int pNumPatas) {
-		this.numPatas = (pNumPatas < 0) ? 0 : pNumPatas;
+		this.numPatas = (pNumPatas <= 0) ? 1 : pNumPatas;
 	}
 
 	public int getDimension() {
@@ -67,7 +67,12 @@ public class Mesa {
 	}
 
 	public void setDimension(int dimension) {
-		this.dimension = dimension;
+		if(dimension>0) {
+			this.dimension = dimension;
+		}
+		else {
+			this.dimension=0;
+		}
 	}
 
 	public String getColor() {
@@ -103,34 +108,44 @@ public class Mesa {
 	}
 
 	public int calcularPrecio() {
+		int precioTotal=0;
 		// cálculo de las patas
-		int precioPatas = this.getNumPatas() * PRECIO_PATA;
+		int precioPatas = 0; 
 		// cálculo de la dimensión
-		int precioDimension = this.getDimension() * PRECIO_M2;
+		int precioDimension = 0; 
 		// cálculo del color
 		int precioColor = 0;
-		if (this.getColor().equals("custom")) {
-			precioColor = PRECIO_COLOR_CUSTOM;
+		if(this.getDimension()==0) {
+			precioTotal=0;
 		}
-		int precioMaterial = 0;
-		switch (this.getMaterial()) {
-		case 1: {
-			precioMaterial = PRECIO_MATERIAL_MADERA;
-			break;
+		else {
+			precioPatas = this.getNumPatas() * PRECIO_PATA;
+			precioDimension = this.getDimension() * PRECIO_M2;
+			if (this.getColor().equals("custom")) {
+				precioColor = PRECIO_COLOR_CUSTOM;
+			}
+			int precioMaterial = 0;
+			switch (this.getMaterial()) {
+			case 1: {
+				precioMaterial = PRECIO_MATERIAL_MADERA;
+				break;
+			}
+			case 2: {
+				precioMaterial = PRECIO_MATERIAL_ACERO;
+				break;
+			}
+			case 3: {
+				precioMaterial = PRECIO_MATERIAL_ALUMINIO;
+				break;
+			}
+			case 4: {
+				precioMaterial = PRECIO_MATERIAL_PLASTICO;
+				break;
+			}
+			}
+			precioTotal=precioPatas + (precioDimension * precioMaterial) + precioColor ;
 		}
-		case 2: {
-			precioMaterial = PRECIO_MATERIAL_ACERO;
-			break;
-		}
-		case 3: {
-			precioMaterial = PRECIO_MATERIAL_ALUMINIO;
-			break;
-		}
-		case 4: {
-			precioMaterial = PRECIO_MATERIAL_PLASTICO;
-			break;
-		}
-		}
-		return precioPatas + (precioDimension * precioMaterial) + precioColor ;
+		
+		return precioTotal;
 	}
 }
